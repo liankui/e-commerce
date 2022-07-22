@@ -116,6 +116,7 @@ func (l *ProductListLogic) ProductList(in *product.ProductListRequest) (*product
 		Products:  firstPage,
 	}
 	if !isCache {
+		// 异步写入缓存
 		threading.GoSafe(func() {
 			if len(products) < defaultLimit && len(products) > 0 {
 				endTime, _ := time.Parse("2006-01-02 15:04:05", "0000-00-00 00:00:00")

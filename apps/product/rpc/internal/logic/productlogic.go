@@ -26,6 +26,7 @@ func NewProductLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ProductLo
 }
 
 func (l *ProductLogic) Product(in *product.ProductItemRequest) (*product.ProductItem, error) {
+	// 防止缓存击穿，singleflight的原理是当同时有很多请求同时到来时，最终只有一个请求会最终访问到资源，其他请求都会等待结果然后返回。
 	v, err, _ := l.svcCtx.SingleGroup.Do(fmt.Sprintf("product:%d", in.ProductId), func() (interface{}, error) {
 		return l.svcCtx.ProductModel.FindOne(l.ctx, in.ProductId)
 	})
