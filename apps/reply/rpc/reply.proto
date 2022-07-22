@@ -1,7 +1,6 @@
 syntax = "proto3";
 
-package template;
-
+package reply;
 option go_package = "./reply";
 
 service Reply {

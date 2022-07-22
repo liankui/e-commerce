@@ -35,7 +35,7 @@ func NewReplyClient(cc grpc.ClientConnInterface) ReplyClient {
 
 func (c *replyClient) Comments(ctx context.Context, in *CommentsRequest, opts ...grpc.CallOption) (*CommentsResponse, error) {
 	out := new(CommentsResponse)
-	err := c.cc.Invoke(ctx, "/template.Reply/Comments", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/reply.Reply/Comments", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _Reply_Comments_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/template.Reply/Comments",
+		FullMethod: "/reply.Reply/Comments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ReplyServer).Comments(ctx, req.(*CommentsRequest))
@@ -92,7 +92,7 @@ func _Reply_Comments_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Reply_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "template.Reply",
+	ServiceName: "reply.Reply",
 	HandlerType: (*ReplyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

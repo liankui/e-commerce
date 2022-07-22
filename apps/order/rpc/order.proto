@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package order;
-option go_package="./order";
+option go_package = "./order";
 
 
 service Order {
@@ -84,3 +84,4 @@ message GetOrderByIdReq {
 
 message GetOrderByIdResp {
   Orders order = 1; //order
+}
