@@ -39,17 +39,17 @@ type (
 	}
 
 	Orderitem struct {
-		Id           int64     `db:"id"`            // 订单子表id
-		Orderid      string    `db:"orderid"`       // 订单id
-		Userid       int64     `db:"userid"`        // 用户id
-		Productid    int64     `db:"productid"`     // 商品id
-		ProductName  string    `db:"product_name"`  // 商品名称
-		ProductImage string    `db:"product_image"` // 商品图片地址
-		CurrentPrice float64   `db:"current_price"` // 生成订单时的商品单价，单位是元,保留两位小数
-		Quantity     int64     `db:"quantity"`      // 商品数量
-		TotalPrice   float64   `db:"total_price"`   // 商品总价,单位是元,保留两位小数
-		CreateTime   time.Time `db:"create_time"`   // 创建时间
-		UpdateTime   time.Time `db:"update_time"`   // 更新时间
+		Id               int64     `db:"id"`               // 订单子表id
+		Orderid          string    `db:"orderid"`          // 订单id
+		Userid           int64     `db:"userid"`           // 用户id
+		Proid            int64     `db:"proid"`            // 商品id
+		Proname          string    `db:"proname"`          // 商品名称
+		Proimage         string    `db:"proimage"`         // 商品图片地址
+		Currentunitprice float64   `db:"currentunitprice"` // 生成订单时的商品单价，单位是元,保留两位小数
+		Quantity         int64     `db:"quantity"`         // 商品数量
+		Totalprice       float64   `db:"totalprice"`       // 商品总价,单位是元,保留两位小数
+		CreateTime       time.Time `db:"create_time"`      // 创建时间
+		UpdateTime       time.Time `db:"update_time"`      // 更新时间
 	}
 )
 
@@ -64,7 +64,7 @@ func (m *defaultOrderitemModel) Insert(ctx context.Context, data *Orderitem) (sq
 	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, orderitemRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Orderid, data.Userid, data.Productid, data.ProductName, data.ProductImage, data.CurrentPrice, data.Quantity, data.TotalPrice)
+		return conn.ExecCtx(ctx, query, data.Orderid, data.Userid, data.Proid, data.Proname, data.Proimage, data.Currentunitprice, data.Quantity, data.Totalprice)
 	}, orderitemIdKey)
 	return ret, err
 }
@@ -90,7 +90,7 @@ func (m *defaultOrderitemModel) Update(ctx context.Context, data *Orderitem) err
 	orderitemIdKey := fmt.Sprintf("%s%v", cacheOrderitemIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, orderitemRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Orderid, data.Userid, data.Productid, data.ProductName, data.ProductImage, data.CurrentPrice, data.Quantity, data.TotalPrice, data.Id)
+		return conn.ExecCtx(ctx, query, data.Orderid, data.Userid, data.Proid, data.Proname, data.Proimage, data.Currentunitprice, data.Quantity, data.Totalprice, data.Id)
 	}, orderitemIdKey)
 	return err
 }

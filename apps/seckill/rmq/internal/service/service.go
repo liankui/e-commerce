@@ -23,8 +23,9 @@ type Service struct {
 	c          config.Config
 	ProductRPC product.Product
 	OrderRPC   order.Order
-	waiter     sync.WaitGroup
-	msgsChan   []chan *KafkaData
+
+	waiter   sync.WaitGroup
+	msgsChan []chan *KafkaData
 }
 
 type KafkaData struct {
